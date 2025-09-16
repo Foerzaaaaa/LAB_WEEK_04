@@ -1,55 +1,39 @@
 package com.example.lab_week_04
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CafeDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CafeDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val root = inflater.inflate(R.layout.fragment_cafe_detail, container, false)
+        val textView: TextView = root.findViewById(R.id.cafe_detail_text)
+        val title = arguments?.getString(ARG_TITLE) ?: "Cafe"
+        val desc = arguments?.getString(ARG_DESC) ?: "No description available."
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cafe_detail, container, false)
+        textView.text = "$title\n\n$desc"
+
+        return root
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CafeDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic fun newInstance(param1: String, param2: String) =
-                CafeDetailFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
+        private const val ARG_TITLE = "title"
+        private const val ARG_DESC = "desc"
+
+        fun newInstance(title: String, desc: String): CafeDetailFragment {
+            val fragment = CafeDetailFragment()
+            val args = Bundle()
+            args.putString(ARG_TITLE, title)
+            args.putString(ARG_DESC, desc)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }
